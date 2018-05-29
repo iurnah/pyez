@@ -1,0 +1,13 @@
+<configuration-text>
+## Last changed: 2018-04-26 16:14:56 PDT
+system {
+    services {
+        ssh {
+            root-login allow;
+        }
+        netconf {
+            ssh;
+        }
+    }
+}
+</configuration-text>

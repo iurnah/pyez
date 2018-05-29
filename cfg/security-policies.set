@@ -1,0 +1,12 @@
+<configuration-set>
+set security policies from-zone trust to-zone untrust policy 1 match source-address any
+set security policies from-zone trust to-zone untrust policy 1 match destination-address any
+set security policies from-zone trust to-zone untrust policy 1 match application any
+set security policies from-zone trust to-zone untrust policy 1 then permit application-services security-intelligence-policy SecIntel-policy
+set security policies from-zone trust to-zone untrust policy 1 then permit application-services advanced-anti-malware-policy aamw-policy
+set security policies from-zone untrust to-zone trust policy 1 match source-address any
+set security policies from-zone untrust to-zone trust policy 1 match destination-address any
+set security policies from-zone untrust to-zone trust policy 1 match application any
+set security policies from-zone untrust to-zone trust policy 1 then permit application-services security-intelligence-policy SecIntel-policy
+set security policies from-zone untrust to-zone trust policy 1 then permit application-services advanced-anti-malware-policy aamw-policy
+</configuration-set>

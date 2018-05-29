@@ -1,0 +1,7 @@
+<configuration-set>
+set security zones security-zone internet host-inbound-traffic system-services all
+set security zones security-zone internet host-inbound-traffic protocols all
+set security zones security-zone internet interfaces ge-0/0/0.0
+set security zones security-zone trust interfaces ge-0/0/1.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/2.0 host-inbound-traffic system-services ping
+</configuration-set>

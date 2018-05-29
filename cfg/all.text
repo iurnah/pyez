@@ -1,0 +1,429 @@
+<configuration-text>
+## Last changed: 2018-04-26 16:14:56 PDT
+version "18.3I20180412_1559_ruihan [ruihan]";
+groups {
+    global {
+        system {
+            login {
+                class wheel {
+                    permissions [ admin clear field floppy interface maintenance network reset routing shell snmp system trace view ];
+                }
+                class readonly {
+                    permissions [ interface network routing system trace view ];
+                }
+                user regress {
+                    uid 928;
+                    class read-only;
+                    shell csh;
+                    authentication {
+                        encrypted-password "$1$kPU..$w.4FGRAGanJ8U4Yq6sbj7.block";
+                    }
+                }
+            }
+            root-authentication {
+                encrypted-password "$1$ZUlES4dp$OUwWo1g7cLoV/aMWpHUnC/";
+            }
+            domain-name spglab.juniper.net;
+            domain-search [ spglab.juniper.net englab.juniper.net juniper.net jnpr.net ];
+            time-zone America/Los_Angeles;
+            debugger-on-panic;
+            debugger-on-break;
+            dump-on-panic;
+            authentication-order password;
+            name-server {
+                10.155.191.252;
+                192.168.5.68;
+            }
+            services {
+                finger;
+                ftp;
+                rlogin;
+                ssh;
+                telnet;
+                xnm-clear-text;
+                web-management {
+                    http;
+                }
+            }
+            syslog {
+                user * {
+                    any emergency;
+                }
+                host log {
+                    kernel info;
+                    any notice;
+                    pfe info;
+                    interactive-commands any;
+                }
+                file messages {
+                    kernel info;
+                    any notice;
+                    authorization info;
+                    pfe info;
+                    archive world-readable;
+                }
+                file security {
+                    interactive-commands any;
+                    archive world-readable;
+                }
+            }
+            processes {
+                routing enable;
+                ntp enable;
+                management enable;
+                watchdog enable;
+                snmp enable;
+                inet-process enable;
+                mib-process enable;
+            }
+            ntp {
+                boot-server 66.129.255.62;
+                server 66.129.255.62;
+            }
+        }
+        chassis {
+            dump-on-panic;
+        }
+        security {
+            forwarding-options {
+                family {
+                    inet6 {
+                        mode flow-based;
+                    }
+                }
+            }
+            policies {
+                default-policy {
+                    permit-all;
+                }
+            }
+            zones {
+                security-zone HOST {
+                    host-inbound-traffic {
+                        system-services {
+                            any-service;
+                        }
+                        protocols {
+                            all;
+                        }
+                    }
+                }
+            }
+        }
+        interfaces {
+            lo0 {
+                unit 0 {
+                    family inet {
+                        address 127.0.0.1/32;
+                        address 10.254.70.45/32 {
+                            primary;
+                        }
+                    }
+                    family iso {
+                        address 47.0005.80ff.f800.0000.0108.0001.0102.5407.0045.00;
+                    }
+                    family inet6 {
+                        address abcd::10:254:70:45/128 {
+                            primary;
+                        }
+                    }
+                }
+            }
+        }
+        snmp {
+            location "Building B";
+            contact "Amjad Barakat";
+            interface fxp0.0;
+            community public {
+                authorization read-only;
+            }
+            community private {
+                authorization read-write;
+            }
+        }
+        routing-options {
+            static {
+                route 207.17.137.227/32 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 66.129.236.0/24 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 66.129.230.0/24 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 207.17.136.0/24 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 172.16.0.0/12 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 192.168.0.0/16 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+                route 10.0.0.0/8 {
+                    next-hop 10.157.64.1;
+                    retain;
+                    no-readvertise;
+                }
+            }
+            router-id 10.254.70.45;
+        }
+    }
+    re0 {
+        system {
+            host-name argon-forge-26;
+            backup-router 10.157.64.1;
+        }
+        interfaces {
+            fxp0 {
+                unit 0 {
+                    family inet {
+                        address 10.157.70.45/19;
+                    }
+                }
+            }
+        }
+    }
+}
+apply-groups [ global re0 ];
+system {
+    root-authentication {
+        encrypted-password "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0";
+        ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp";
+    }
+    ports {
+        console log-out-on-disconnect;
+    }
+    services {
+        ssh {
+            root-login allow;
+        }
+        netconf {
+            ssh;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any any;
+            structured-data;
+        }
+    }
+}
+services {
+    ssl {
+        initiation {
+            profile aamw-ssl {
+                trusted-ca [ aamw-secintel-ca aamw-cloud-ca ];
+                client-certificate aamw-srx-cert;
+                actions {
+                    crl {
+                        disable;
+                    }
+                }
+            }
+        }
+    }
+    security-intelligence {
+        url https://cloudfeeds.argonqa.junipersecurity.net/api/manifest.xml;
+        authentication {
+            tls-profile aamw-ssl;
+        }
+        profile cc {
+            category CC;
+            default-rule {
+                then {
+                    action {
+                        block {
+                            drop;
+                        }
+                    }
+                    log;
+                }
+            }
+        }
+        policy SecIntel-policy {
+            CC {
+                cc;
+            }
+        }
+    }
+    advanced-anti-malware {
+        connection {
+            url https://srxapi.argonqa.junipersecurity.net;
+            authentication {
+                tls-profile aamw-ssl;
+            }
+        }
+        policy aamw-policy {
+            http {
+                inspection-profile default_profile;
+                action permit;
+                notification {
+                    log;
+                }
+            }
+            verdict-threshold 2;
+            default-notification {
+                log;
+            }
+        }
+        traceoptions {
+            file aamw.log size 100m;
+            level all;
+            flag all;
+        }
+    }
+}
+security {
+    log {
+        mode event;
+    }
+    pki {
+        ca-profile aamw-ca {
+            ca-identity deviceCA;
+            enrollment {
+                url http://ca.junipersecurity.net:8080/ejbca/publicweb/apply/scep/SRX/pkiclient.exe;
+            }
+            revocation-check {
+                disable;
+                crl {
+                    url http://va.junipersecurity.net/ca/deviceCA.crl;
+                }
+            }
+        }
+        ca-profile aamw-secintel-ca {
+            ca-identity JUNIPER;
+            revocation-check {
+                crl {
+                    url http://va.junipersecurity.net/ca/current.crl;
+                }
+            }
+        }
+        ca-profile aamw-cloud-ca {
+            ca-identity JUNIPER_CLOUD;
+            revocation-check {
+                crl {
+                    url http://va.junipersecurity.net/ca/cloudCA.crl;
+                }
+            }
+        }
+    }
+    policies {
+        from-zone trust to-zone untrust {
+            policy 1 {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit {
+                        application-services {
+                            security-intelligence-policy SecIntel-policy;
+                            advanced-anti-malware-policy aamw-policy;
+                        }
+                    }
+                }
+            }
+        }
+        from-zone untrust to-zone trust {
+            policy 1 {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit {
+                        application-services {
+                            security-intelligence-policy SecIntel-policy;
+                            advanced-anti-malware-policy aamw-policy;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    zones {
+        security-zone internet {
+            host-inbound-traffic {
+                system-services {
+                    all;
+                }
+                protocols {
+                    all;
+                }
+            }
+            interfaces {
+                ge-0/0/0.0;
+            }
+        }
+        security-zone trust {
+            interfaces {
+                ge-0/0/1.0 {
+                    host-inbound-traffic {
+                        system-services {
+                            ping;
+                        }
+                    }
+                }
+            }
+        }
+        security-zone untrust {
+            interfaces {
+                ge-0/0/2.0 {
+                    host-inbound-traffic {
+                        system-services {
+                            ping;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+interfaces {
+    ge-0/0/0 {
+        unit 0 {
+            family inet {
+                address 19.255.77.88/8;
+            }
+        }
+    }
+    ge-0/0/1 {
+        unit 0 {
+            family inet {
+                address 26.0.0.254/8;
+            }
+        }
+    }
+    ge-0/0/2 {
+        unit 0 {
+            family inet {
+                address 27.0.0.254/8;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 19.255.254.1;
+    }
+}
+</configuration-text>

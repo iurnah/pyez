@@ -1,0 +1,4 @@
+<configuration-set>
+set system services ssh root-login allow
+set system services netconf ssh
+</configuration-set>

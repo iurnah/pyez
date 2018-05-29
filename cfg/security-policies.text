@@ -1,0 +1,41 @@
+<configuration-text>
+## Last changed: 2018-04-26 16:14:56 PDT
+security {
+    policies {
+        from-zone trust to-zone untrust {
+            policy 1 {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit {
+                        application-services {
+                            security-intelligence-policy SecIntel-policy;
+                            advanced-anti-malware-policy aamw-policy;
+                        }
+                    }
+                }
+            }
+        }
+        from-zone untrust to-zone trust {
+            policy 1 {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit {
+                        application-services {
+                            security-intelligence-policy SecIntel-policy;
+                            advanced-anti-malware-policy aamw-policy;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</configuration-text>

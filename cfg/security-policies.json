@@ -1,0 +1,71 @@
+{
+  "configuration": {
+    "@": {
+      "junos:changed-localtime": "2018-04-26 16:14:56 PDT", 
+      "junos:changed-seconds": "1524784496", 
+      "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
+    }, 
+    "security": {
+      "policies": {
+        "policy": [
+          {
+            "policy": [
+              {
+                "then": {
+                  "permit": {
+                    "application-services": {
+                      "advanced-anti-malware-policy": "aamw-policy", 
+                      "security-intelligence-policy": "SecIntel-policy"
+                    }
+                  }
+                }, 
+                "name": "1", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }
+            ], 
+            "to-zone-name": "untrust", 
+            "from-zone-name": "trust"
+          }, 
+          {
+            "policy": [
+              {
+                "then": {
+                  "permit": {
+                    "application-services": {
+                      "advanced-anti-malware-policy": "aamw-policy", 
+                      "security-intelligence-policy": "SecIntel-policy"
+                    }
+                  }
+                }, 
+                "name": "1", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }
+            ], 
+            "to-zone-name": "trust", 
+            "from-zone-name": "untrust"
+          }
+        ]
+      }
+    }
+  }
+}

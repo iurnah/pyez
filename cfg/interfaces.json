@@ -1,0 +1,64 @@
+{
+  "configuration": {
+    "@": {
+      "junos:changed-localtime": "2018-04-27 16:09:11 PDT", 
+      "junos:changed-seconds": "1524870551", 
+      "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
+    }, 
+    "interfaces": {
+      "interface": [
+        {
+          "name": "ge-0/0/0", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "19.255.77.88/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "ge-0/0/1", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "26.0.0.254/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "ge-0/0/2", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "27.0.0.254/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+<configuration-set>
+set interfaces ge-0/0/0 unit 0 family inet address 19.255.77.88/8
+set interfaces ge-0/0/1 unit 0 family inet address 26.0.0.254/8
+set interfaces ge-0/0/2 unit 0 family inet address 27.0.0.254/8
+</configuration-set>

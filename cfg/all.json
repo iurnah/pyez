@@ -1,0 +1,885 @@
+{
+  "configuration": {
+    "@": {
+      "junos:changed-localtime": "2018-04-26 16:14:56 PDT", 
+      "junos:changed-seconds": "1524784496", 
+      "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
+    }, 
+    "interfaces": {
+      "interface": [
+        {
+          "name": "ge-0/0/0", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "19.255.77.88/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "ge-0/0/1", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "26.0.0.254/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "ge-0/0/2", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "27.0.0.254/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }, 
+    "routing-options": {
+      "static": {
+        "route": [
+          {
+            "next-hop": [
+              "19.255.254.1"
+            ], 
+            "name": "0.0.0.0/0"
+          }
+        ]
+      }
+    }, 
+    "apply-groups": [
+      "global", 
+      "re0"
+    ], 
+    "system": {
+      "services": {
+        "netconf": {
+          "ssh": [
+            null
+          ]
+        }, 
+        "ssh": {
+          "root-login": "allow"
+        }
+      }, 
+      "syslog": {
+        "user": [
+          {
+            "name": "*", 
+            "contents": [
+              {
+                "name": "any", 
+                "emergency": [
+                  null
+                ]
+              }
+            ]
+          }
+        ], 
+        "file": [
+          {
+            "structured-data": [
+              null
+            ], 
+            "name": "messages", 
+            "contents": [
+              {
+                "name": "any", 
+                "any": [
+                  null
+                ]
+              }
+            ]
+          }
+        ]
+      }, 
+      "root-authentication": {
+        "encrypted-password": "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0", 
+        "ssh-rsa": [
+          {
+            "name": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp"
+          }
+        ]
+      }, 
+      "ports": {
+        "console": {
+          "log-out-on-disconnect": [
+            null
+          ]
+        }
+      }
+    }, 
+    "version": "18.3I20180412_1559_ruihan [ruihan]", 
+    "groups": [
+      {
+        "name": "global", 
+        "routing-options": {
+          "static": {
+            "route": [
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "207.17.137.227/32", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "66.129.236.0/24", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "66.129.230.0/24", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "207.17.136.0/24", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "172.16.0.0/12", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "192.168.0.0/16", 
+                "retain": [
+                  null
+                ]
+              }, 
+              {
+                "next-hop": [
+                  "10.157.64.1"
+                ], 
+                "no-readvertise": [
+                  null
+                ], 
+                "name": "10.0.0.0/8", 
+                "retain": [
+                  null
+                ]
+              }
+            ]
+          }, 
+          "router-id": "10.254.70.45"
+        }, 
+        "interfaces": {
+          "interface": [
+            {
+              "name": "lo0", 
+              "unit": [
+                {
+                  "name": 0, 
+                  "family": {
+                    "iso": {
+                      "address": [
+                        {
+                          "name": "47.0005.80ff.f800.0000.0108.0001.0102.5407.0045.00"
+                        }
+                      ]
+                    }, 
+                    "inet6": {
+                      "address": [
+                        {
+                          "name": "abcd::10:254:70:45/128", 
+                          "primary": [
+                            null
+                          ]
+                        }
+                      ]
+                    }, 
+                    "inet": {
+                      "address": [
+                        {
+                          "name": "127.0.0.1/32"
+                        }, 
+                        {
+                          "name": "10.254.70.45/32", 
+                          "primary": [
+                            null
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }, 
+        "snmp": {
+          "interface": [
+            "fxp0.0"
+          ], 
+          "contact": "Amjad Barakat", 
+          "location": "Building B", 
+          "community": [
+            {
+              "name": "public", 
+              "authorization": "read-only"
+            }, 
+            {
+              "name": "private", 
+              "authorization": "read-write"
+            }
+          ]
+        }, 
+        "system": {
+          "root-authentication": {
+            "encrypted-password": "$1$ZUlES4dp$OUwWo1g7cLoV/aMWpHUnC/"
+          }, 
+          "name-server": [
+            {
+              "name": "10.155.191.252"
+            }, 
+            {
+              "name": "192.168.5.68"
+            }
+          ], 
+          "debugger-on-break": [
+            null
+          ], 
+          "time-zone": "America/Los_Angeles", 
+          "ntp": {
+            "server": [
+              {
+                "name": "66.129.255.62"
+              }
+            ], 
+            "boot-server": "66.129.255.62"
+          }, 
+          "processes": {
+            "ntp": {
+              "enable": [
+                null
+              ]
+            }, 
+            "management": {
+              "enable": [
+                null
+              ]
+            }, 
+            "routing": {
+              "enable": [
+                null
+              ]
+            }, 
+            "daemon-process": [
+              {
+                "enable": [
+                  null
+                ], 
+                "name": "snmp"
+              }, 
+              {
+                "enable": [
+                  null
+                ], 
+                "name": "inet-process"
+              }, 
+              {
+                "enable": [
+                  null
+                ], 
+                "name": "mib-process"
+              }
+            ], 
+            "watchdog": {
+              "enable": [
+                null
+              ]
+            }
+          }, 
+          "debugger-on-panic": [
+            null
+          ], 
+          "syslog": {
+            "host": [
+              {
+                "name": "log", 
+                "contents": [
+                  {
+                    "info": [
+                      null
+                    ], 
+                    "name": "kernel"
+                  }, 
+                  {
+                    "notice": [
+                      null
+                    ], 
+                    "name": "any"
+                  }, 
+                  {
+                    "info": [
+                      null
+                    ], 
+                    "name": "pfe"
+                  }, 
+                  {
+                    "name": "interactive-commands", 
+                    "any": [
+                      null
+                    ]
+                  }
+                ]
+              }
+            ], 
+            "user": [
+              {
+                "name": "*", 
+                "contents": [
+                  {
+                    "name": "any", 
+                    "emergency": [
+                      null
+                    ]
+                  }
+                ]
+              }
+            ], 
+            "file": [
+              {
+                "name": "messages", 
+                "contents": [
+                  {
+                    "info": [
+                      null
+                    ], 
+                    "name": "kernel"
+                  }, 
+                  {
+                    "notice": [
+                      null
+                    ], 
+                    "name": "any"
+                  }, 
+                  {
+                    "info": [
+                      null
+                    ], 
+                    "name": "authorization"
+                  }, 
+                  {
+                    "info": [
+                      null
+                    ], 
+                    "name": "pfe"
+                  }
+                ], 
+                "archive": {
+                  "world-readable": [
+                    null
+                  ]
+                }
+              }, 
+              {
+                "name": "security", 
+                "contents": [
+                  {
+                    "name": "interactive-commands", 
+                    "any": [
+                      null
+                    ]
+                  }
+                ], 
+                "archive": {
+                  "world-readable": [
+                    null
+                  ]
+                }
+              }
+            ]
+          }, 
+          "domain-name": "spglab.juniper.net", 
+          "domain-search": [
+            "spglab.juniper.net", 
+            "englab.juniper.net", 
+            "juniper.net", 
+            "jnpr.net"
+          ], 
+          "services": {
+            "ftp": [
+              null
+            ], 
+            "rlogin": [
+              null
+            ], 
+            "web-management": {
+              "http": [
+                null
+              ]
+            }, 
+            "telnet": [
+              null
+            ], 
+            "xnm-clear-text": [
+              null
+            ], 
+            "finger": [
+              null
+            ], 
+            "ssh": [
+              null
+            ]
+          }, 
+          "login": {
+            "class": [
+              {
+                "name": "wheel", 
+                "permissions": [
+                  "admin", 
+                  "clear", 
+                  "field", 
+                  "floppy", 
+                  "interface", 
+                  "maintenance", 
+                  "network", 
+                  "reset", 
+                  "routing", 
+                  "shell", 
+                  "snmp", 
+                  "system", 
+                  "trace", 
+                  "view"
+                ]
+              }, 
+              {
+                "name": "readonly", 
+                "permissions": [
+                  "interface", 
+                  "network", 
+                  "routing", 
+                  "system", 
+                  "trace", 
+                  "view"
+                ]
+              }
+            ], 
+            "user": [
+              {
+                "authentication": {
+                  "encrypted-password": "$1$kPU..$w.4FGRAGanJ8U4Yq6sbj7.block"
+                }, 
+                "class": "read-only", 
+                "shell": "csh", 
+                "name": "regress", 
+                "uid": 928
+              }
+            ]
+          }, 
+          "authentication-order": [
+            "password"
+          ], 
+          "dump-on-panic": [
+            null
+          ]
+        }, 
+        "chassis": {
+          "dump-on-panic": [
+            null
+          ]
+        }, 
+        "security": {
+          "zones": {
+            "security-zone": [
+              {
+                "host-inbound-traffic": {
+                  "system-services": [
+                    {
+                      "name": "any-service"
+                    }
+                  ], 
+                  "protocols": [
+                    {
+                      "name": "all"
+                    }
+                  ]
+                }, 
+                "name": "HOST"
+              }
+            ]
+          }, 
+          "policies": {
+            "default-policy": {
+              "permit-all": [
+                null
+              ]
+            }
+          }, 
+          "forwarding-options": {
+            "family": {
+              "inet6": {
+                "mode": "flow-based"
+              }
+            }
+          }
+        }
+      }, 
+      {
+        "interfaces": {
+          "interface": [
+            {
+              "name": "fxp0", 
+              "unit": [
+                {
+                  "name": 0, 
+                  "family": {
+                    "inet": {
+                      "address": [
+                        {
+                          "name": "10.157.70.45/19"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }, 
+        "name": "re0", 
+        "system": {
+          "host-name": "argon-forge-26", 
+          "backup-router": {
+            "address": "10.157.64.1"
+          }
+        }
+      }
+    ], 
+    "services": {
+      "advanced-anti-malware": {
+        "policy": [
+          {
+            "verdict-threshold": "2", 
+            "http": {
+              "inspection-profile": "default_profile", 
+              "action": "permit", 
+              "notification": {
+                "log": [
+                  null
+                ]
+              }
+            }, 
+            "name": "aamw-policy", 
+            "default-notification": {
+              "log": [
+                null
+              ]
+            }
+          }
+        ], 
+        "connection": {
+          "url": "https://srxapi.argonqa.junipersecurity.net", 
+          "authentication": {
+            "tls-profile": "aamw-ssl"
+          }
+        }, 
+        "traceoptions": {
+          "flag": [
+            {
+              "name": "all"
+            }
+          ], 
+          "file": {
+            "size": "100m", 
+            "filename": "aamw.log"
+          }, 
+          "level": "all"
+        }
+      }, 
+      "ssl": {
+        "initiation": {
+          "profile": [
+            {
+              "trusted-ca": [
+                "aamw-secintel-ca", 
+                "aamw-cloud-ca"
+              ], 
+              "client-certificate": "aamw-srx-cert", 
+              "name": "aamw-ssl", 
+              "actions": {
+                "crl": {
+                  "disable": [
+                    null
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }, 
+      "security-intelligence": {
+        "url": "https://cloudfeeds.argonqa.junipersecurity.net/api/manifest.xml", 
+        "profile": [
+          {
+            "category": "CC", 
+            "name": "cc", 
+            "default-rule": {
+              "then": {
+                "action": {
+                  "block": {
+                    "drop": [
+                      null
+                    ]
+                  }
+                }, 
+                "log": [
+                  null
+                ]
+              }
+            }
+          }
+        ], 
+        "authentication": {
+          "tls-profile": "aamw-ssl"
+        }, 
+        "policy": [
+          {
+            "category-profiles": [
+              {
+                "name": "CC", 
+                "profile-name": "cc"
+              }
+            ], 
+            "name": "SecIntel-policy"
+          }
+        ]
+      }
+    }, 
+    "security": {
+      "zones": {
+        "security-zone": [
+          {
+            "interfaces": [
+              {
+                "name": "ge-0/0/0.0"
+              }
+            ], 
+            "host-inbound-traffic": {
+              "system-services": [
+                {
+                  "name": "all"
+                }
+              ], 
+              "protocols": [
+                {
+                  "name": "all"
+                }
+              ]
+            }, 
+            "name": "internet"
+          }, 
+          {
+            "interfaces": [
+              {
+                "host-inbound-traffic": {
+                  "system-services": [
+                    {
+                      "name": "ping"
+                    }
+                  ]
+                }, 
+                "name": "ge-0/0/1.0"
+              }
+            ], 
+            "name": "trust"
+          }, 
+          {
+            "interfaces": [
+              {
+                "host-inbound-traffic": {
+                  "system-services": [
+                    {
+                      "name": "ping"
+                    }
+                  ]
+                }, 
+                "name": "ge-0/0/2.0"
+              }
+            ], 
+            "name": "untrust"
+          }
+        ]
+      }, 
+      "pki": {
+        "ca-profile": [
+          {
+            "ca-identity": "deviceCA", 
+            "enrollment": {
+              "url": "http://ca.junipersecurity.net:8080/ejbca/publicweb/apply/scep/SRX/pkiclient.exe"
+            }, 
+            "name": "aamw-ca", 
+            "revocation-check": {
+              "disable": [
+                null
+              ], 
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/deviceCA.crl"
+                  }
+                ]
+              }
+            }
+          }, 
+          {
+            "ca-identity": "JUNIPER", 
+            "name": "aamw-secintel-ca", 
+            "revocation-check": {
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/current.crl"
+                  }
+                ]
+              }
+            }
+          }, 
+          {
+            "ca-identity": "JUNIPER_CLOUD", 
+            "name": "aamw-cloud-ca", 
+            "revocation-check": {
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/cloudCA.crl"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }, 
+      "log": {
+        "mode": "event"
+      }, 
+      "policies": {
+        "policy": [
+          {
+            "policy": [
+              {
+                "then": {
+                  "permit": {
+                    "application-services": {
+                      "advanced-anti-malware-policy": "aamw-policy", 
+                      "security-intelligence-policy": "SecIntel-policy"
+                    }
+                  }
+                }, 
+                "name": "1", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }
+            ], 
+            "to-zone-name": "untrust", 
+            "from-zone-name": "trust"
+          }, 
+          {
+            "policy": [
+              {
+                "then": {
+                  "permit": {
+                    "application-services": {
+                      "advanced-anti-malware-policy": "aamw-policy", 
+                      "security-intelligence-policy": "SecIntel-policy"
+                    }
+                  }
+                }, 
+                "name": "1", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }
+            ], 
+            "to-zone-name": "trust", 
+            "from-zone-name": "untrust"
+          }
+        ]
+      }
+    }
+  }
+}

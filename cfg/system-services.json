@@ -1,0 +1,21 @@
+{
+  "configuration": {
+    "@": {
+      "junos:changed-localtime": "2018-04-26 16:14:56 PDT", 
+      "junos:changed-seconds": "1524784496", 
+      "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
+    }, 
+    "system": {
+      "services": {
+        "netconf": {
+          "ssh": [
+            null
+          ]
+        }, 
+        "ssh": {
+          "root-login": "allow"
+        }
+      }
+    }
+  }
+}

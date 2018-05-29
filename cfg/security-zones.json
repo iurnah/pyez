@@ -1,0 +1,65 @@
+{
+  "configuration": {
+    "@": {
+      "junos:changed-localtime": "2018-04-26 16:14:56 PDT", 
+      "junos:changed-seconds": "1524784496", 
+      "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
+    }, 
+    "security": {
+      "zones": {
+        "security-zone": [
+          {
+            "interfaces": [
+              {
+                "name": "ge-0/0/0.0"
+              }
+            ], 
+            "host-inbound-traffic": {
+              "system-services": [
+                {
+                  "name": "all"
+                }
+              ], 
+              "protocols": [
+                {
+                  "name": "all"
+                }
+              ]
+            }, 
+            "name": "internet"
+          }, 
+          {
+            "interfaces": [
+              {
+                "host-inbound-traffic": {
+                  "system-services": [
+                    {
+                      "name": "ping"
+                    }
+                  ]
+                }, 
+                "name": "ge-0/0/1.0"
+              }
+            ], 
+            "name": "trust"
+          }, 
+          {
+            "interfaces": [
+              {
+                "host-inbound-traffic": {
+                  "system-services": [
+                    {
+                      "name": "ping"
+                    }
+                  ]
+                }, 
+                "name": "ge-0/0/2.0"
+              }
+            ], 
+            "name": "untrust"
+          }
+        ]
+      }
+    }
+  }
+}
