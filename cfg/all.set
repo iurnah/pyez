@@ -1,5 +1,5 @@
 <configuration-set>
-set version "18.3I20180412_1559_ruihan [ruihan]"
+set version "18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]"
 set groups global system login class wheel permissions admin
 set groups global system login class wheel permissions clear
 set groups global system login class wheel permissions field
@@ -107,23 +107,53 @@ set groups re0 interfaces fxp0 unit 0 family inet address 10.157.70.45/19
 set apply-groups global
 set apply-groups re0
 set system root-authentication encrypted-password "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0"
-set system root-authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp"
-set system ports console log-out-on-disconnect
+set system root-authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnt8lXFtybGVvfOsvhLZBwTglWtzSQWB4aU0cQBCQnRc3phWFX8HeeD6ww2qN1QxeKByWcgPwZ4FkMN3WPYgJqxxiK0AXHaNxR7tgGbHAM3tJll5nhD5abwntanVamI71GLUKKHAiafpS3bzKFk/buyHG8XGLsYxqyGCqpnqjkLkaXB4AMT8OzkEIDhqrJUFejdYC3aX4y/QDYmomIYNQudkk/pz+fqelYFqrIwPpKT1vvr1jRjW3pPvzVvJuXM239okt/gIvpXuSet0YZDIHuPdInPrmEJ2jVELNYl1WJWooWJmgdUdmj7AqvZZO5if8cTOtLLt6b6qW2cWIL3g6Z ruihan@ruihan-mbp"
+set system name-server 8.8.8.8
+set system name-server 8.8.4.4
 set system services ssh root-login allow
+set system services telnet
+set system services xnm-clear-text
 set system services netconf ssh
+set system services dhcp-local-server group jdhcp-group interface ge-0/0/1.0
+set system services web-management https system-generated-certificate
 set system syslog user * any emergency
-set system syslog file messages any any
-set system syslog file messages structured-data
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system max-configurations-on-flash 5
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+set system security-profile logical-aamw
+set logical-systems LD1 services advanced-anti-malware default-policy http inspection-profile default_profile
+set logical-systems LD1 services advanced-anti-malware default-policy http action block
+set logical-systems LD1 services advanced-anti-malware default-policy http notification log
+set logical-systems LD1 security-profile logical-aamw
 set services ssl initiation profile aamw-ssl trusted-ca aamw-secintel-ca
 set services ssl initiation profile aamw-ssl trusted-ca aamw-cloud-ca
 set services ssl initiation profile aamw-ssl client-certificate aamw-srx-cert
 set services ssl initiation profile aamw-ssl actions crl disable
 set services security-intelligence url https://cloudfeeds.argonqa.junipersecurity.net/api/manifest.xml
 set services security-intelligence authentication tls-profile aamw-ssl
+set services security-intelligence traceoptions file secintel_trace
+set services security-intelligence traceoptions file size 100m
+set services security-intelligence traceoptions level all
+set services security-intelligence traceoptions flag all
 set services security-intelligence profile cc category CC
 set services security-intelligence profile cc default-rule then action block drop
 set services security-intelligence profile cc default-rule then log
-set services security-intelligence policy SecIntel-policy CC cc
+set services security-intelligence profile cc_profile category CC
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 1
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 2
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 3
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 4
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 5
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 6
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 7
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 8
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 9
+set services security-intelligence profile cc_profile rule CC_rule match threat-level 10
+set services security-intelligence profile cc_profile rule CC_rule then action block close http file secintel_default_page.html
+set services security-intelligence profile cc_profile rule CC_rule then log
+set services security-intelligence policy SecIntel-policy CC cc_profile
 set services advanced-anti-malware connection url https://srxapi.argonqa.junipersecurity.net
 set services advanced-anti-malware connection authentication tls-profile aamw-ssl
 set services advanced-anti-malware policy aamw-policy http inspection-profile default_profile
@@ -131,11 +161,8 @@ set services advanced-anti-malware policy aamw-policy http action permit
 set services advanced-anti-malware policy aamw-policy http notification log
 set services advanced-anti-malware policy aamw-policy verdict-threshold 2
 set services advanced-anti-malware policy aamw-policy default-notification log
-set services advanced-anti-malware traceoptions file aamw.log
-set services advanced-anti-malware traceoptions file size 100m
-set services advanced-anti-malware traceoptions level all
-set services advanced-anti-malware traceoptions flag all
-set security log mode event
+set security log mode stream
+set security log report
 set security pki ca-profile aamw-ca ca-identity deviceCA
 set security pki ca-profile aamw-ca enrollment url http://ca.junipersecurity.net:8080/ejbca/publicweb/apply/scep/SRX/pkiclient.exe
 set security pki ca-profile aamw-ca revocation-check disable
@@ -144,6 +171,31 @@ set security pki ca-profile aamw-secintel-ca ca-identity JUNIPER
 set security pki ca-profile aamw-secintel-ca revocation-check crl url http://va.junipersecurity.net/ca/current.crl
 set security pki ca-profile aamw-cloud-ca ca-identity JUNIPER_CLOUD
 set security pki ca-profile aamw-cloud-ca revocation-check crl url http://va.junipersecurity.net/ca/cloudCA.crl
+set security dynamic-address traceoptions file da_trace
+set security dynamic-address traceoptions file size 100m
+set security dynamic-address traceoptions level all
+set security dynamic-address traceoptions flag all
+set security screen ids-option untrust-screen icmp ping-death
+set security screen ids-option untrust-screen ip source-route-option
+set security screen ids-option untrust-screen ip tear-drop
+set security screen ids-option untrust-screen tcp syn-flood alarm-threshold 1024
+set security screen ids-option untrust-screen tcp syn-flood attack-threshold 200
+set security screen ids-option untrust-screen tcp syn-flood source-threshold 1024
+set security screen ids-option untrust-screen tcp syn-flood destination-threshold 2048
+set security screen ids-option untrust-screen tcp syn-flood timeout 20
+set security screen ids-option untrust-screen tcp land
+set security nat source rule-set trust-to-untrust from zone trust
+set security nat source rule-set trust-to-untrust to zone untrust
+set security nat source rule-set trust-to-untrust rule source-nat-rule match source-address 0.0.0.0/0
+set security nat source rule-set trust-to-untrust rule source-nat-rule then source-nat interface
+set security policies from-zone trust to-zone trust policy default-permit match source-address any
+set security policies from-zone trust to-zone trust policy default-permit match destination-address any
+set security policies from-zone trust to-zone trust policy default-permit match application any
+set security policies from-zone trust to-zone trust policy default-permit then permit
+set security policies from-zone trust to-zone untrust policy default-permit match source-address any
+set security policies from-zone trust to-zone untrust policy default-permit match destination-address any
+set security policies from-zone trust to-zone untrust policy default-permit match application any
+set security policies from-zone trust to-zone untrust policy default-permit then permit
 set security policies from-zone trust to-zone untrust policy 1 match source-address any
 set security policies from-zone trust to-zone untrust policy 1 match destination-address any
 set security policies from-zone trust to-zone untrust policy 1 match application any
@@ -160,7 +212,19 @@ set security zones security-zone internet interfaces ge-0/0/0.0
 set security zones security-zone trust interfaces ge-0/0/1.0 host-inbound-traffic system-services ping
 set security zones security-zone untrust interfaces ge-0/0/2.0 host-inbound-traffic system-services ping
 set interfaces ge-0/0/0 unit 0 family inet address 19.255.77.88/8
+set interfaces ge-0/0/1 unit 0 family inet address 192.168.2.1/24
 set interfaces ge-0/0/1 unit 0 family inet address 26.0.0.254/8
+set interfaces ge-0/0/2 unit 0 family inet address 192.168.3.1/24
 set interfaces ge-0/0/2 unit 0 family inet address 27.0.0.254/8
+set interfaces ge-0/0/3 unit 0 family inet address 192.168.4.1/24
+set interfaces xe-0/0/16 unit 0 family inet address 192.168.5.1/24
+set interfaces xe-0/0/17 unit 0 family inet address 192.168.6.1/24
+set interfaces fxp0 unit 0 family inet address 192.168.1.1/24
 set routing-options static route 0.0.0.0/0 next-hop 19.255.254.1
+set protocols l2-learning global-mode transparent-bridge
+set access address-assignment pool junosDHCPPool family inet network 192.168.2.0/24
+set access address-assignment pool junosDHCPPool family inet range junosRange low 192.168.2.2
+set access address-assignment pool junosDHCPPool family inet range junosRange high 192.168.2.254
+set access address-assignment pool junosDHCPPool family inet dhcp-attributes router 192.168.2.1
+set access address-assignment pool junosDHCPPool family inet dhcp-attributes propagate-settings ge-0/0/0.0
 </configuration-set>

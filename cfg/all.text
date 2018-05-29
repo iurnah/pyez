@@ -1,6 +1,6 @@
 <configuration-text>
-## Last changed: 2018-04-26 16:14:56 PDT
-version "18.3I20180412_1559_ruihan [ruihan]";
+## Last changed: 2018-05-25 00:33:39 PDT
+version "18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]";
 groups {
     global {
         system {
@@ -202,17 +202,30 @@ apply-groups [ global re0 ];
 system {
     root-authentication {
         encrypted-password "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0";
-        ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp";
+        ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnt8lXFtybGVvfOsvhLZBwTglWtzSQWB4aU0cQBCQnRc3phWFX8HeeD6ww2qN1QxeKByWcgPwZ4FkMN3WPYgJqxxiK0AXHaNxR7tgGbHAM3tJll5nhD5abwntanVamI71GLUKKHAiafpS3bzKFk/buyHG8XGLsYxqyGCqpnqjkLkaXB4AMT8OzkEIDhqrJUFejdYC3aX4y/QDYmomIYNQudkk/pz+fqelYFqrIwPpKT1vvr1jRjW3pPvzVvJuXM239okt/gIvpXuSet0YZDIHuPdInPrmEJ2jVELNYl1WJWooWJmgdUdmj7AqvZZO5if8cTOtLLt6b6qW2cWIL3g6Z ruihan@ruihan-mbp";
     }
-    ports {
-        console log-out-on-disconnect;
+    name-server {
+        8.8.8.8;
+        8.8.4.4;
     }
     services {
         ssh {
             root-login allow;
         }
+        telnet;
+        xnm-clear-text;
         netconf {
             ssh;
+        }
+        dhcp-local-server {
+            group jdhcp-group {
+                interface ge-0/0/1.0;
+            }
+        }
+        web-management {
+            https {
+                system-generated-certificate;
+            }
         }
     }
     syslog {
@@ -220,8 +233,40 @@ system {
             any emergency;
         }
         file messages {
-            any any;
-            structured-data;
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+    max-configurations-on-flash 5;
+    license {
+        autoupdate {
+            url https://ae1.juniper.net/junos/key_retrieval;
+        }
+    }
+    security-profile {
+        logical-aamw;
+    }
+}
+logical-systems {
+    LD1 {
+        services {
+            advanced-anti-malware {
+                default-policy {
+                    http {
+                        inspection-profile default_profile;
+                        action block;
+                        notification {
+                            log;
+                        }
+                    }
+                }
+            }
+        }
+        security-profile {
+            logical-aamw;
         }
     }
 }
@@ -244,6 +289,11 @@ services {
         authentication {
             tls-profile aamw-ssl;
         }
+        traceoptions {
+            file secintel_trace size 100m;
+            level all;
+            flag all;
+        }
         profile cc {
             category CC;
             default-rule {
@@ -257,9 +307,29 @@ services {
                 }
             }
         }
+        profile cc_profile {
+            category CC;
+            rule CC_rule {
+                match {
+                    threat-level [ 1 2 3 4 5 6 7 8 9 10 ];
+                }
+                then {
+                    action {
+                        block {
+                            close {
+                                http {
+                                    file secintel_default_page.html;
+                                }
+                            }
+                        }
+                    }
+                    log;
+                }
+            }
+        }
         policy SecIntel-policy {
             CC {
-                cc;
+                cc_profile;
             }
         }
     }
@@ -283,16 +353,12 @@ services {
                 log;
             }
         }
-        traceoptions {
-            file aamw.log size 100m;
-            level all;
-            flag all;
-        }
     }
 }
 security {
     log {
-        mode event;
+        mode stream;
+        report;
     }
     pki {
         ca-profile aamw-ca {
@@ -324,8 +390,76 @@ security {
             }
         }
     }
+    dynamic-address {
+        traceoptions {
+            file da_trace size 100m;
+            level all;
+            flag all;
+        }
+    }
+    screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+    nat {
+        source {
+            rule-set trust-to-untrust {
+                from zone trust;
+                to zone untrust;
+                rule source-nat-rule {
+                    match {
+                        source-address 0.0.0.0/0;
+                    }
+                    then {
+                        source-nat {
+                            interface;
+                        }
+                    }
+                }
+            }
+        }
+    }
     policies {
+        from-zone trust to-zone trust {
+            policy default-permit {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
         from-zone trust to-zone untrust {
+            policy default-permit {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
             policy 1 {
                 match {
                     source-address any;
@@ -409,6 +543,7 @@ interfaces {
     ge-0/0/1 {
         unit 0 {
             family inet {
+                address 192.168.2.1/24;
                 address 26.0.0.254/8;
             }
         }
@@ -416,7 +551,36 @@ interfaces {
     ge-0/0/2 {
         unit 0 {
             family inet {
+                address 192.168.3.1/24;
                 address 27.0.0.254/8;
+            }
+        }
+    }
+    ge-0/0/3 {
+        unit 0 {
+            family inet {
+                address 192.168.4.1/24;
+            }
+        }
+    }
+    xe-0/0/16 {
+        unit 0 {
+            family inet {
+                address 192.168.5.1/24;
+            }
+        }
+    }
+    xe-0/0/17 {
+        unit 0 {
+            family inet {
+                address 192.168.6.1/24;
+            }
+        }
+    }
+    fxp0 {
+        unit 0 {
+            family inet {
+                address 192.168.1.1/24;
             }
         }
     }
@@ -424,6 +588,30 @@ interfaces {
 routing-options {
     static {
         route 0.0.0.0/0 next-hop 19.255.254.1;
+    }
+}
+protocols {
+    l2-learning {
+        global-mode transparent-bridge;
+    }
+}
+access {
+    address-assignment {
+        pool junosDHCPPool {
+            family inet {
+                network 192.168.2.0/24;
+                range junosRange {
+                    low 192.168.2.2;
+                    high 192.168.2.254;
+                }
+                dhcp-attributes {
+                    router {
+                        192.168.2.1;
+                    }
+                    propagate-settings ge-0/0/0.0;
+                }
+            }
+        }
     }
 }
 </configuration-text>

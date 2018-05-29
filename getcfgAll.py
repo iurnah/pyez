@@ -7,7 +7,7 @@ from lxml import etree
 from jnpr.junos import Device
 from jnpr.junos.exception import ConnectError
 
-hostname = ""
+hostname = "argon-forge-26.spglab.juniper.net"
 username = "root"
 password = ""
 key_path = "./id_rsa"

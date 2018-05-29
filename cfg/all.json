@@ -1,8 +1,8 @@
 {
   "configuration": {
     "@": {
-      "junos:changed-localtime": "2018-04-26 16:14:56 PDT", 
-      "junos:changed-seconds": "1524784496", 
+      "junos:changed-localtime": "2018-05-25 00:33:39 PDT", 
+      "junos:changed-seconds": "1527233619", 
       "xmlns": "http://xml.juniper.net/xnm/1.1/xnm"
     }, 
     "interfaces": {
@@ -33,6 +33,9 @@
                 "inet": {
                   "address": [
                     {
+                      "name": "192.168.2.1/24"
+                    }, 
+                    {
                       "name": "26.0.0.254/8"
                     }
                   ]
@@ -50,7 +53,78 @@
                 "inet": {
                   "address": [
                     {
+                      "name": "192.168.3.1/24"
+                    }, 
+                    {
                       "name": "27.0.0.254/8"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "ge-0/0/3", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "192.168.4.1/24"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "xe-0/0/16", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "192.168.5.1/24"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "xe-0/0/17", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "192.168.6.1/24"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "fxp0", 
+          "unit": [
+            {
+              "name": 0, 
+              "family": {
+                "inet": {
+                  "address": [
+                    {
+                      "name": "192.168.1.1/24"
                     }
                   ]
                 }
@@ -77,14 +151,36 @@
       "re0"
     ], 
     "system": {
-      "services": {
-        "netconf": {
-          "ssh": [
-            null
-          ]
+      "root-authentication": {
+        "encrypted-password": "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0", 
+        "ssh-rsa": [
+          {
+            "name": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnt8lXFtybGVvfOsvhLZBwTglWtzSQWB4aU0cQBCQnRc3phWFX8HeeD6ww2qN1QxeKByWcgPwZ4FkMN3WPYgJqxxiK0AXHaNxR7tgGbHAM3tJll5nhD5abwntanVamI71GLUKKHAiafpS3bzKFk/buyHG8XGLsYxqyGCqpnqjkLkaXB4AMT8OzkEIDhqrJUFejdYC3aX4y/QDYmomIYNQudkk/pz+fqelYFqrIwPpKT1vvr1jRjW3pPvzVvJuXM239okt/gIvpXuSet0YZDIHuPdInPrmEJ2jVELNYl1WJWooWJmgdUdmj7AqvZZO5if8cTOtLLt6b6qW2cWIL3g6Z ruihan@ruihan-mbp"
+          }
+        ]
+      }, 
+      "name-server": [
+        {
+          "name": "8.8.8.8"
         }, 
-        "ssh": {
-          "root-login": "allow"
+        {
+          "name": "8.8.4.4"
+        }
+      ], 
+      "security-profile": {
+        "profile": [
+          {
+            "name": "logical-aamw"
+          }
+        ]
+      }, 
+      "license": {
+        "autoupdate": {
+          "url": [
+            {
+              "name": "https://ae1.juniper.net/junos/key_retrieval"
+            }
+          ]
         }
       }, 
       "syslog": {
@@ -103,13 +199,27 @@
         ], 
         "file": [
           {
-            "structured-data": [
-              null
-            ], 
             "name": "messages", 
             "contents": [
               {
-                "name": "any", 
+                "notice": [
+                  null
+                ], 
+                "name": "any"
+              }, 
+              {
+                "info": [
+                  null
+                ], 
+                "name": "authorization"
+              }
+            ]
+          }, 
+          {
+            "name": "interactive-commands", 
+            "contents": [
+              {
+                "name": "interactive-commands", 
                 "any": [
                   null
                 ]
@@ -118,23 +228,73 @@
           }
         ]
       }, 
-      "root-authentication": {
-        "encrypted-password": "$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0", 
-        "ssh-rsa": [
-          {
-            "name": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp"
-          }
-        ]
-      }, 
-      "ports": {
-        "console": {
-          "log-out-on-disconnect": [
+      "services": {
+        "netconf": {
+          "ssh": [
             null
           ]
+        }, 
+        "dhcp-local-server": {
+          "group": [
+            {
+              "interface": [
+                {
+                  "name": "ge-0/0/1.0"
+                }
+              ], 
+              "name": "jdhcp-group"
+            }
+          ]
+        }, 
+        "web-management": {
+          "https": {
+            "system-generated-certificate": [
+              null
+            ]
+          }
+        }, 
+        "telnet": [
+          null
+        ], 
+        "xnm-clear-text": [
+          null
+        ], 
+        "ssh": {
+          "root-login": "allow"
         }
+      }, 
+      "max-configurations-on-flash": 5
+    }, 
+    "access": {
+      "address-assignment": {
+        "pool": [
+          {
+            "name": "junosDHCPPool", 
+            "family": {
+              "inet": {
+                "range": [
+                  {
+                    "high": "192.168.2.254", 
+                    "name": "junosRange", 
+                    "low": "192.168.2.2"
+                  }
+                ], 
+                "network": "192.168.2.0/24", 
+                "dhcp-attributes": {
+                  "router": [
+                    {
+                      "name": "192.168.2.1"
+                    }
+                  ], 
+                  "propagate-settings": "ge-0/0/0.0"
+                }
+              }
+            }
+          }
+        ]
       }
     }, 
-    "version": "18.3I20180412_1559_ruihan [ruihan]", 
+    "version": "18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]", 
     "groups": [
       {
         "name": "global", 
@@ -613,6 +773,29 @@
         }
       }
     ], 
+    "logical-systems": [
+      {
+        "services": {
+          "advanced-anti-malware": {
+            "default-policy": {
+              "http": {
+                "inspection-profile": "default_profile", 
+                "action": "block", 
+                "notification": {
+                  "log": [
+                    null
+                  ]
+                }
+              }
+            }
+          }
+        }, 
+        "name": "LD1", 
+        "security-profile": {
+          "security-profile-name": "logical-aamw"
+        }
+      }
+    ], 
     "services": {
       "advanced-anti-malware": {
         "policy": [
@@ -640,18 +823,6 @@
           "authentication": {
             "tls-profile": "aamw-ssl"
           }
-        }, 
-        "traceoptions": {
-          "flag": [
-            {
-              "name": "all"
-            }
-          ], 
-          "file": {
-            "size": "100m", 
-            "filename": "aamw.log"
-          }, 
-          "level": "all"
         }
       }, 
       "ssl": {
@@ -695,6 +866,43 @@
                 ]
               }
             }
+          }, 
+          {
+            "category": "CC", 
+            "name": "cc_profile", 
+            "rule": [
+              {
+                "then": {
+                  "action": {
+                    "block": {
+                      "close": {
+                        "http": {
+                          "file": "secintel_default_page.html"
+                        }
+                      }
+                    }
+                  }, 
+                  "log": [
+                    null
+                  ]
+                }, 
+                "name": "CC_rule", 
+                "match": {
+                  "threat-level": [
+                    1, 
+                    2, 
+                    3, 
+                    4, 
+                    5, 
+                    6, 
+                    7, 
+                    8, 
+                    9, 
+                    10
+                  ]
+                }
+              }
+            ]
           }
         ], 
         "authentication": {
@@ -705,15 +913,65 @@
             "category-profiles": [
               {
                 "name": "CC", 
-                "profile-name": "cc"
+                "profile-name": "cc_profile"
               }
             ], 
             "name": "SecIntel-policy"
           }
-        ]
+        ], 
+        "traceoptions": {
+          "flag": [
+            {
+              "name": "all"
+            }
+          ], 
+          "file": {
+            "size": "100m", 
+            "filename": "secintel_trace"
+          }, 
+          "level": "all"
+        }
       }
     }, 
     "security": {
+      "log": {
+        "report": [
+          null
+        ], 
+        "mode": "stream"
+      }, 
+      "screen": {
+        "ids-option": [
+          {
+            "ip": {
+              "source-route-option": [
+                null
+              ], 
+              "tear-drop": [
+                null
+              ]
+            }, 
+            "icmp": {
+              "ping-death": [
+                null
+              ]
+            }, 
+            "name": "untrust-screen", 
+            "tcp": {
+              "syn-flood": {
+                "source-threshold": 1024, 
+                "attack-threshold": 200, 
+                "destination-threshold": 2048, 
+                "timeout": 20, 
+                "alarm-threshold": 1024
+              }, 
+              "land": [
+                null
+              ]
+            }
+          }
+        ]
+      }, 
       "zones": {
         "security-zone": [
           {
@@ -768,62 +1026,68 @@
           }
         ]
       }, 
-      "pki": {
-        "ca-profile": [
-          {
-            "ca-identity": "deviceCA", 
-            "enrollment": {
-              "url": "http://ca.junipersecurity.net:8080/ejbca/publicweb/apply/scep/SRX/pkiclient.exe"
-            }, 
-            "name": "aamw-ca", 
-            "revocation-check": {
-              "disable": [
-                null
-              ], 
-              "crl": {
-                "url": [
-                  {
-                    "name": "http://va.junipersecurity.net/ca/deviceCA.crl"
-                  }
-                ]
-              }
+      "dynamic-address": {
+        "traceoptions": {
+          "flag": [
+            {
+              "name": "all"
             }
+          ], 
+          "file": {
+            "size": "100m", 
+            "filename": "da_trace"
           }, 
-          {
-            "ca-identity": "JUNIPER", 
-            "name": "aamw-secintel-ca", 
-            "revocation-check": {
-              "crl": {
-                "url": [
-                  {
-                    "name": "http://va.junipersecurity.net/ca/current.crl"
-                  }
-                ]
-              }
-            }
-          }, 
-          {
-            "ca-identity": "JUNIPER_CLOUD", 
-            "name": "aamw-cloud-ca", 
-            "revocation-check": {
-              "crl": {
-                "url": [
-                  {
-                    "name": "http://va.junipersecurity.net/ca/cloudCA.crl"
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }, 
-      "log": {
-        "mode": "event"
+          "level": "all"
+        }
       }, 
       "policies": {
         "policy": [
           {
             "policy": [
+              {
+                "then": {
+                  "permit": [
+                    null
+                  ]
+                }, 
+                "name": "default-permit", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }
+            ], 
+            "to-zone-name": "trust", 
+            "from-zone-name": "trust"
+          }, 
+          {
+            "policy": [
+              {
+                "then": {
+                  "permit": [
+                    null
+                  ]
+                }, 
+                "name": "default-permit", 
+                "match": {
+                  "application": [
+                    "any"
+                  ], 
+                  "destination-address": [
+                    "any"
+                  ], 
+                  "source-address": [
+                    "any"
+                  ]
+                }
+              }, 
               {
                 "then": {
                   "permit": {
@@ -879,6 +1143,96 @@
             "from-zone-name": "untrust"
           }
         ]
+      }, 
+      "nat": {
+        "source": {
+          "rule-set": [
+            {
+              "to": {
+                "zone": [
+                  "untrust"
+                ]
+              }, 
+              "from": {
+                "zone": [
+                  "trust"
+                ]
+              }, 
+              "name": "trust-to-untrust", 
+              "rule": [
+                {
+                  "then": {
+                    "source-nat": {
+                      "interface": [
+                        null
+                      ]
+                    }
+                  }, 
+                  "name": "source-nat-rule", 
+                  "src-nat-rule-match": {
+                    "source-address": [
+                      "0.0.0.0/0"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }, 
+      "pki": {
+        "ca-profile": [
+          {
+            "ca-identity": "deviceCA", 
+            "enrollment": {
+              "url": "http://ca.junipersecurity.net:8080/ejbca/publicweb/apply/scep/SRX/pkiclient.exe"
+            }, 
+            "name": "aamw-ca", 
+            "revocation-check": {
+              "disable": [
+                null
+              ], 
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/deviceCA.crl"
+                  }
+                ]
+              }
+            }
+          }, 
+          {
+            "ca-identity": "JUNIPER", 
+            "name": "aamw-secintel-ca", 
+            "revocation-check": {
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/current.crl"
+                  }
+                ]
+              }
+            }
+          }, 
+          {
+            "ca-identity": "JUNIPER_CLOUD", 
+            "name": "aamw-cloud-ca", 
+            "revocation-check": {
+              "crl": {
+                "url": [
+                  {
+                    "name": "http://va.junipersecurity.net/ca/cloudCA.crl"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }, 
+    "protocols": {
+      "l2-learning": {
+        "global-mode": "transparent-bridge"
       }
     }
   }

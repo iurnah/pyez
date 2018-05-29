@@ -1,5 +1,5 @@
-<configuration changed-seconds="1524784496" changed-localtime="2018-04-26 16:14:56 PDT">
-    <version>18.3I20180412_1559_ruihan [ruihan]</version>
+<configuration changed-seconds="1527233619" changed-localtime="2018-05-25 00:33:39 PDT">
+    <version>18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]</version>
     <groups>
         <name>global</name>
         <system>
@@ -322,22 +322,40 @@
         <root-authentication>
             <encrypted-password>$6$f4wW38XA$Oi6FZaOEPXRcKc6UAQ.8Fps5Mw2a85OpsSmvw.jyzT6rvmyF9nkBYWvLEG/Cn4pJ8IgheKIUy5i1Xf4aKGRLx0</encrypted-password>
             <ssh-rsa>
-                <name>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKptWTprFdcqkLQpdci1v8W/0ZTSd9OIRPtEPhUW+uI2hyoCrsVx3HjgqAJ4ZpenDKaRMjk0tKfkJ9pkQq5wPYXFr06Q7kjPI7G/Sv/mBX0WpD1C0eDq0xEQw+4uEinJ2Ep89wsx+BTATZY2kYCyqrS6Wvu+nByaxY57/f0rtYQF0o8NyBB/AqVjuRmN6AYHKlSiZwOsyeRvtkfE5aFdOd7YzJTfgUEZGNRMEIJIwH6c7gGiKn+jsSQf3GuV4C578eIP+Jtajxk46IYPVG1gWQqdP/YIrLcAbbP4DDxCpRfJiJeZY9+GgimZbzYdUo1HHleDqRzfDv4xwQ0H2Fouxb ruihan@ruihan-mbp</name>
+                <name>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnt8lXFtybGVvfOsvhLZBwTglWtzSQWB4aU0cQBCQnRc3phWFX8HeeD6ww2qN1QxeKByWcgPwZ4FkMN3WPYgJqxxiK0AXHaNxR7tgGbHAM3tJll5nhD5abwntanVamI71GLUKKHAiafpS3bzKFk/buyHG8XGLsYxqyGCqpnqjkLkaXB4AMT8OzkEIDhqrJUFejdYC3aX4y/QDYmomIYNQudkk/pz+fqelYFqrIwPpKT1vvr1jRjW3pPvzVvJuXM239okt/gIvpXuSet0YZDIHuPdInPrmEJ2jVELNYl1WJWooWJmgdUdmj7AqvZZO5if8cTOtLLt6b6qW2cWIL3g6Z ruihan@ruihan-mbp</name>
             </ssh-rsa>
         </root-authentication>
-        <ports>
-            <console>
-                <log-out-on-disconnect/>
-            </console>
-        </ports>
+        <name-server>
+            <name>8.8.8.8</name>
+        </name-server>
+        <name-server>
+            <name>8.8.4.4</name>
+        </name-server>
         <services>
             <ssh>
                 <root-login>allow</root-login>
             </ssh>
+            <telnet>
+            </telnet>
+            <xnm-clear-text>
+            </xnm-clear-text>
             <netconf>
                 <ssh>
                 </ssh>
             </netconf>
+            <dhcp-local-server>
+                <group>
+                    <name>jdhcp-group</name>
+                    <interface>
+                        <name>ge-0/0/1.0</name>
+                    </interface>
+                </group>
+            </dhcp-local-server>
+            <web-management>
+                <https>
+                    <system-generated-certificate/>
+                </https>
+            </web-management>
         </services>
         <syslog>
             <user>
@@ -351,13 +369,54 @@
                 <name>messages</name>
                 <contents>
                     <name>any</name>
+                    <notice/>
+                </contents>
+                <contents>
+                    <name>authorization</name>
+                    <info/>
+                </contents>
+            </file>
+            <file>
+                <name>interactive-commands</name>
+                <contents>
+                    <name>interactive-commands</name>
                     <any/>
                 </contents>
-                <structured-data>
-                </structured-data>
             </file>
         </syslog>
+        <max-configurations-on-flash>5</max-configurations-on-flash>
+        <license>
+            <autoupdate>
+                <url>
+                    <name>https://ae1.juniper.net/junos/key_retrieval</name>
+                </url>
+            </autoupdate>
+        </license>
+        <security-profile>
+            <profile>
+                <name>logical-aamw</name>
+            </profile>
+        </security-profile>
     </system>
+    <logical-systems>
+        <name>LD1</name>
+        <services>
+            <advanced-anti-malware>
+                <default-policy>
+                    <http>
+                        <inspection-profile>default_profile</inspection-profile>
+                        <action>block</action>
+                        <notification>
+                            <log/>
+                        </notification>
+                    </http>
+                </default-policy>
+            </advanced-anti-malware>
+        </services>
+        <security-profile>
+            <security-profile-name>logical-aamw</security-profile-name>
+        </security-profile>
+    </logical-systems>
     <services>
         <ssl>
             <initiation>
@@ -379,6 +438,16 @@
             <authentication>
                 <tls-profile>aamw-ssl</tls-profile>
             </authentication>
+            <traceoptions>
+                <file>
+                    <filename>secintel_trace</filename>
+                    <size>100m</size>
+                </file>
+                <level>all</level>
+                <flag>
+                    <name>all</name>
+                </flag>
+            </traceoptions>
             <profile>
                 <name>cc</name>
                 <category>CC</category>
@@ -394,11 +463,43 @@
                     </then>
                 </default-rule>
             </profile>
+            <profile>
+                <name>cc_profile</name>
+                <category>CC</category>
+                <rule>
+                    <name>CC_rule</name>
+                    <match>
+                        <threat-level>1</threat-level>
+                        <threat-level>2</threat-level>
+                        <threat-level>3</threat-level>
+                        <threat-level>4</threat-level>
+                        <threat-level>5</threat-level>
+                        <threat-level>6</threat-level>
+                        <threat-level>7</threat-level>
+                        <threat-level>8</threat-level>
+                        <threat-level>9</threat-level>
+                        <threat-level>10</threat-level>
+                    </match>
+                    <then>
+                        <action>
+                            <block>
+                                <close>
+                                    <http>
+                                        <file>secintel_default_page.html</file>
+                                    </http>
+                                </close>
+                            </block>
+                        </action>
+                        <log>
+                        </log>
+                    </then>
+                </rule>
+            </profile>
             <policy>
                 <name>SecIntel-policy</name>
                 <category-profiles>
                     <name>CC</name>
-                    <profile-name>cc</profile-name>
+                    <profile-name>cc_profile</profile-name>
                 </category-profiles>
             </policy>
         </security-intelligence>
@@ -423,21 +524,13 @@
                     <log/>
                 </default-notification>
             </policy>
-            <traceoptions>
-                <file>
-                    <filename>aamw.log</filename>
-                    <size>100m</size>
-                </file>
-                <level>all</level>
-                <flag>
-                    <name>all</name>
-                </flag>
-            </traceoptions>
         </advanced-anti-malware>
     </services>
     <security>
         <log>
-            <mode>event</mode>
+            <mode>stream</mode>
+            <report>
+            </report>
         </log>
         <pki>
             <ca-profile>
@@ -478,10 +571,97 @@
                 </revocation-check>
             </ca-profile>
         </pki>
+        <dynamic-address>
+            <traceoptions>
+                <file>
+                    <filename>da_trace</filename>
+                    <size>100m</size>
+                </file>
+                <level>all</level>
+                <flag>
+                    <name>all</name>
+                </flag>
+            </traceoptions>
+        </dynamic-address>
+        <screen>
+            <ids-option>
+                <name>untrust-screen</name>
+                <icmp>
+                    <ping-death/>
+                </icmp>
+                <ip>
+                    <source-route-option/>
+                    <tear-drop/>
+                </ip>
+                <tcp>
+                    <syn-flood>
+                        <alarm-threshold>1024</alarm-threshold>
+                        <attack-threshold>200</attack-threshold>
+                        <source-threshold>1024</source-threshold>
+                        <destination-threshold>2048</destination-threshold>
+                        <timeout>20</timeout>
+                    </syn-flood>
+                    <land/>
+                </tcp>
+            </ids-option>
+        </screen>
+        <nat>
+            <source>
+                <rule-set>
+                    <name>trust-to-untrust</name>
+                    <from>
+                        <zone>trust</zone>
+                    </from>
+                    <to>
+                        <zone>untrust</zone>
+                    </to>
+                    <rule>
+                        <name>source-nat-rule</name>
+                        <src-nat-rule-match>
+                            <source-address>0.0.0.0/0</source-address>
+                        </src-nat-rule-match>
+                        <then>
+                            <source-nat>
+                                <interface>
+                                </interface>
+                            </source-nat>
+                        </then>
+                    </rule>
+                </rule-set>
+            </source>
+        </nat>
         <policies>
             <policy>
                 <from-zone-name>trust</from-zone-name>
+                <to-zone-name>trust</to-zone-name>
+                <policy>
+                    <name>default-permit</name>
+                    <match>
+                        <source-address>any</source-address>
+                        <destination-address>any</destination-address>
+                        <application>any</application>
+                    </match>
+                    <then>
+                        <permit>
+                        </permit>
+                    </then>
+                </policy>
+            </policy>
+            <policy>
+                <from-zone-name>trust</from-zone-name>
                 <to-zone-name>untrust</to-zone-name>
+                <policy>
+                    <name>default-permit</name>
+                    <match>
+                        <source-address>any</source-address>
+                        <destination-address>any</destination-address>
+                        <application>any</application>
+                    </match>
+                    <then>
+                        <permit>
+                        </permit>
+                    </then>
+                </policy>
                 <policy>
                     <name>1</name>
                     <match>
@@ -580,6 +760,9 @@
                 <family>
                     <inet>
                         <address>
+                            <name>192.168.2.1/24</name>
+                        </address>
+                        <address>
                             <name>26.0.0.254/8</name>
                         </address>
                     </inet>
@@ -593,7 +776,62 @@
                 <family>
                     <inet>
                         <address>
+                            <name>192.168.3.1/24</name>
+                        </address>
+                        <address>
                             <name>27.0.0.254/8</name>
+                        </address>
+                    </inet>
+                </family>
+            </unit>
+        </interface>
+        <interface>
+            <name>ge-0/0/3</name>
+            <unit>
+                <name>0</name>
+                <family>
+                    <inet>
+                        <address>
+                            <name>192.168.4.1/24</name>
+                        </address>
+                    </inet>
+                </family>
+            </unit>
+        </interface>
+        <interface>
+            <name>xe-0/0/16</name>
+            <unit>
+                <name>0</name>
+                <family>
+                    <inet>
+                        <address>
+                            <name>192.168.5.1/24</name>
+                        </address>
+                    </inet>
+                </family>
+            </unit>
+        </interface>
+        <interface>
+            <name>xe-0/0/17</name>
+            <unit>
+                <name>0</name>
+                <family>
+                    <inet>
+                        <address>
+                            <name>192.168.6.1/24</name>
+                        </address>
+                    </inet>
+                </family>
+            </unit>
+        </interface>
+        <interface>
+            <name>fxp0</name>
+            <unit>
+                <name>0</name>
+                <family>
+                    <inet>
+                        <address>
+                            <name>192.168.1.1/24</name>
                         </address>
                     </inet>
                 </family>
@@ -608,4 +846,32 @@
             </route>
         </static>
     </routing-options>
+    <protocols>
+        <l2-learning>
+            <global-mode>transparent-bridge</global-mode>
+        </l2-learning>
+    </protocols>
+    <access>
+        <address-assignment>
+            <pool>
+                <name>junosDHCPPool</name>
+                <family>
+                    <inet>
+                        <network>192.168.2.0/24</network>
+                        <range>
+                            <name>junosRange</name>
+                            <low>192.168.2.2</low>
+                            <high>192.168.2.254</high>
+                        </range>
+                        <dhcp-attributes>
+                            <router>
+                                <name>192.168.2.1</name>
+                            </router>
+                            <propagate-settings>ge-0/0/0.0</propagate-settings>
+                        </dhcp-attributes>
+                    </inet>
+                </family>
+            </pool>
+        </address-assignment>
+    </access>
 </configuration>
