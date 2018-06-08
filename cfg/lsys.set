@@ -1,0 +1,25 @@
+set system security-profile aamw-gold
+set logical-systems LD1 interfaces ge-0/0/3 unit 0 family inet address 28.0.0.254/8
+set logical-systems LD1 interfaces ge-0/0/4 unit 0 family inet address 29.0.0.254/8
+set logical-systems LD1 routing-instances vr1 instance-type virtual-router
+set logical-systems LD1 routing-instances vr1 interface ge-0/0/3.0
+set logical-systems LD1 routing-instances vr1 interface ge-0/0/4.0
+set logical-systems LD1 services advanced-anti-malware default-policy http inspection-profile default_profile
+set logical-systems LD1 services advanced-anti-malware default-policy http action block
+set logical-systems LD1 services advanced-anti-malware default-policy http notification log
+set logical-systems LD1 services advanced-anti-malware policy aamw-policy-ld1 http inspection-profile default_profile
+set logical-systems LD1 services advanced-anti-malware policy aamw-policy-ld1 http action block
+set logical-systems LD1 services advanced-anti-malware policy aamw-policy-ld1 http notification log
+set logical-systems LD1 services advanced-anti-malware traceoptions file aamwd-ld1-trace
+set logical-systems LD1 services advanced-anti-malware traceoptions file size 100m	
+set logical-systems LD1 security-profile aamw-gold
+set logical-systems LD1 security policies from-zone trust to-zone untrust policy 1 match source-address any
+set logical-systems LD1 security policies from-zone trust to-zone untrust policy 1 match destination-address any
+set logical-systems LD1 security policies from-zone trust to-zone untrust policy 1 match application any
+set logical-systems LD1 security policies from-zone trust to-zone untrust policy 1 then permit application-services advanced-anti-malware-policy aamw-policy-ld1
+set logical-systems LD1 security policies from-zone untrust to-zone trust policy 1 match source-address any
+set logical-systems LD1 security policies from-zone untrust to-zone trust policy 1 match destination-address any
+set logical-systems LD1 security policies from-zone untrust to-zone trust policy 1 match application any
+set logical-systems LD1 security policies from-zone untrust to-zone trust policy 1 then permit application-services advanced-anti-malware-policy aamw-policy-ld1
+set logical-systems LD1 security zones security-zone trust interfaces ge-0/0/3.0 host-inbound-traffic system-services ping
+set logical-systems LD1 security zones security-zone untrust interfaces ge-0/0/4.0 host-inbound-traffic system-services ping

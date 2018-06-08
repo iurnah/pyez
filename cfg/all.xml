@@ -1,5 +1,5 @@
-<configuration changed-seconds="1527233619" changed-localtime="2018-05-25 00:33:39 PDT">
-    <version>18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]</version>
+<configuration changed-seconds="1528478929" changed-localtime="2018-06-08 10:28:49 PDT">
+    <version>18.3I20180524_1149_ruihan [ruihan]</version>
     <groups>
         <name>global</name>
         <system>
@@ -394,15 +394,56 @@
         </license>
         <security-profile>
             <profile>
-                <name>logical-aamw</name>
+                <name>gold</name>
             </profile>
         </security-profile>
     </system>
     <logical-systems>
         <name>LD1</name>
+        <interfaces>
+            <interface>
+                <name>ge-0/0/3</name>
+                <unit>
+                    <name>0</name>
+                    <family>
+                        <inet>
+                            <address>
+                                <name>28.0.0.254/8</name>
+                            </address>
+                        </inet>
+                    </family>
+                </unit>
+            </interface>
+            <interface>
+                <name>ge-0/0/4</name>
+                <unit>
+                    <name>0</name>
+                    <family>
+                        <inet>
+                            <address>
+                                <name>29.0.0.254/8</name>
+                            </address>
+                        </inet>
+                    </family>
+                </unit>
+            </interface>
+        </interfaces>
+        <routing-instances>
+            <instance>
+                <name>vr1</name>
+                <instance-type>virtual-router</instance-type>
+                <interface>
+                    <name>ge-0/0/3.0</name>
+                </interface>
+                <interface>
+                    <name>ge-0/0/4.0</name>
+                </interface>
+            </instance>
+        </routing-instances>
         <services>
             <advanced-anti-malware>
-                <default-policy>
+                <policy>
+                    <name>aamw-policy-ld1</name>
                     <http>
                         <inspection-profile>default_profile</inspection-profile>
                         <action>block</action>
@@ -410,12 +451,84 @@
                             <log/>
                         </notification>
                     </http>
-                </default-policy>
+                </policy>
+                <traceoptions>
+                    <file>
+                        <filename>aamwd-ld1-trace</filename>
+                        <size>100m</size>
+                    </file>
+                </traceoptions>
             </advanced-anti-malware>
         </services>
         <security-profile>
-            <security-profile-name>logical-aamw</security-profile-name>
+            <security-profile-name>gold</security-profile-name>
         </security-profile>
+        <security>
+            <policies>
+                <policy>
+                    <from-zone-name>trust</from-zone-name>
+                    <to-zone-name>untrust</to-zone-name>
+                    <policy>
+                        <name>1</name>
+                        <match>
+                            <source-address>any</source-address>
+                            <destination-address>any</destination-address>
+                            <application>any</application>
+                        </match>
+                        <then>
+                            <permit>
+                                <application-services>
+                                    <advanced-anti-malware-policy>aamw-policy-ld1</advanced-anti-malware-policy>
+                                </application-services>
+                            </permit>
+                        </then>
+                    </policy>
+                </policy>
+                <policy>
+                    <from-zone-name>untrust</from-zone-name>
+                    <to-zone-name>trust</to-zone-name>
+                    <policy>
+                        <name>1</name>
+                        <match>
+                            <source-address>any</source-address>
+                            <destination-address>any</destination-address>
+                            <application>any</application>
+                        </match>
+                        <then>
+                            <permit>
+                                <application-services>
+                                    <advanced-anti-malware-policy>aamw-policy-ld1</advanced-anti-malware-policy>
+                                </application-services>
+                            </permit>
+                        </then>
+                    </policy>
+                </policy>
+            </policies>
+            <zones>
+                <security-zone>
+                    <name>trust</name>
+                    <interfaces>
+                        <name>ge-0/0/3.0</name>
+                        <host-inbound-traffic>
+                            <system-services>
+                                <name>ping</name>
+                            </system-services>
+                        </host-inbound-traffic>
+                    </interfaces>
+                </security-zone>
+                <security-zone>
+                    <name>untrust</name>
+                    <interfaces>
+                        <name>ge-0/0/4.0</name>
+                        <host-inbound-traffic>
+                            <system-services>
+                                <name>ping</name>
+                            </system-services>
+                        </host-inbound-traffic>
+                    </interfaces>
+                </security-zone>
+            </zones>
+        </security>
     </logical-systems>
     <services>
         <ssl>
@@ -524,6 +637,15 @@
                     <log/>
                 </default-notification>
             </policy>
+            <traceoptions>
+                <file>
+                    <filename>aamw_trace</filename>
+                </file>
+                <level>all</level>
+                <flag>
+                    <name>all</name>
+                </flag>
+            </traceoptions>
         </advanced-anti-malware>
     </services>
     <security>
@@ -570,6 +692,11 @@
                     </crl>
                 </revocation-check>
             </ca-profile>
+            <traceoptions>
+                <flag>
+                    <name>all</name>
+                </flag>
+            </traceoptions>
         </pki>
         <dynamic-address>
             <traceoptions>
@@ -787,16 +914,11 @@
         </interface>
         <interface>
             <name>ge-0/0/3</name>
-            <unit>
-                <name>0</name>
-                <family>
-                    <inet>
-                        <address>
-                            <name>192.168.4.1/24</name>
-                        </address>
-                    </inet>
-                </family>
-            </unit>
+            <description>main router interface</description>
+        </interface>
+        <interface>
+            <name>ge-0/0/4</name>
+            <description>main router interface</description>
         </interface>
         <interface>
             <name>xe-0/0/16</name>

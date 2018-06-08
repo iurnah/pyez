@@ -1,6 +1,6 @@
 <configuration-text>
-## Last changed: 2018-05-25 00:33:39 PDT
-version "18.3I18.3I3958-TB-50145-_cd-builder [_cd-builder]";
+## Last changed: 2018-06-08 10:28:49 PDT
+version "18.3I20180524_1149_ruihan [ruihan]";
 groups {
     global {
         system {
@@ -247,14 +247,37 @@ system {
         }
     }
     security-profile {
-        logical-aamw;
+        gold;
     }
 }
 logical-systems {
     LD1 {
+        interfaces {
+            ge-0/0/3 {
+                unit 0 {
+                    family inet {
+                        address 28.0.0.254/8;
+                    }
+                }
+            }
+            ge-0/0/4 {
+                unit 0 {
+                    family inet {
+                        address 29.0.0.254/8;
+                    }
+                }
+            }
+        }
+        routing-instances {
+            vr1 {
+                instance-type virtual-router;
+                interface ge-0/0/3.0;
+                interface ge-0/0/4.0;
+            }
+        }
         services {
             advanced-anti-malware {
-                default-policy {
+                policy aamw-policy-ld1 {
                     http {
                         inspection-profile default_profile;
                         action block;
@@ -263,10 +286,73 @@ logical-systems {
                         }
                     }
                 }
+                traceoptions {
+                    file aamwd-ld1-trace size 100m;
+                }
             }
         }
         security-profile {
-            logical-aamw;
+            gold;
+        }
+        security {
+            policies {
+                from-zone trust to-zone untrust {
+                    policy 1 {
+                        match {
+                            source-address any;
+                            destination-address any;
+                            application any;
+                        }
+                        then {
+                            permit {
+                                application-services {
+                                    advanced-anti-malware-policy aamw-policy-ld1;
+                                }
+                            }
+                        }
+                    }
+                }
+                from-zone untrust to-zone trust {
+                    policy 1 {
+                        match {
+                            source-address any;
+                            destination-address any;
+                            application any;
+                        }
+                        then {
+                            permit {
+                                application-services {
+                                    advanced-anti-malware-policy aamw-policy-ld1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            zones {
+                security-zone trust {
+                    interfaces {
+                        ge-0/0/3.0 {
+                            host-inbound-traffic {
+                                system-services {
+                                    ping;
+                                }
+                            }
+                        }
+                    }
+                }
+                security-zone untrust {
+                    interfaces {
+                        ge-0/0/4.0 {
+                            host-inbound-traffic {
+                                system-services {
+                                    ping;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -353,6 +439,11 @@ services {
                 log;
             }
         }
+        traceoptions {
+            file aamw_trace;
+            level all;
+            flag all;
+        }
     }
 }
 security {
@@ -388,6 +479,9 @@ security {
                     url http://va.junipersecurity.net/ca/cloudCA.crl;
                 }
             }
+        }
+        traceoptions {
+            flag all;
         }
     }
     dynamic-address {
@@ -557,11 +651,10 @@ interfaces {
         }
     }
     ge-0/0/3 {
-        unit 0 {
-            family inet {
-                address 192.168.4.1/24;
-            }
-        }
+        description "main router interface";
+    }
+    ge-0/0/4 {
+        description "main router interface";
     }
     xe-0/0/16 {
         unit 0 {
